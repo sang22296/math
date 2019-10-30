@@ -13,7 +13,6 @@ void free_mat(Matrix *A){
 	}
 	free(A->data);
 	free(A);
-
 }
 
 Matrix *sub_matrix(Matrix *A, uint32_t r_from, uint32_t r_to, uint32_t c_from, uint32_t c_to){
