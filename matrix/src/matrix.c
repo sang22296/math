@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "../inc/matrix.h"
 
 bool is_square(Matrix *A){
 	return (A->row == A->col != 0)?true:false;
@@ -418,6 +418,27 @@ Matrix *inv_mat(Matrix *A){
 	free_mat(minor_sign);
 	free_mat(fact_mat);
 	return invert;
+}
+
+Matrix* add_matrix(Matrix *A, Matrix* B){
+	if(A->row != B->row || A->col != B->col){
+		printf("Two input matrix must have the same size!\n");
+		exit(1);
+	}
+	Matrix *Sum = (Matrix *)calloc(1,sizeof(Matrix));
+	Sum->row = A->row;
+	Sum->col = A->col;
+	double **data = (double **)calloc(Sum->row,sizeof(double *));
+	for(int i=0; i < Sum->row; i++){
+		data[i] = (double *)calloc(Sum->col,sizeof(double));
+	}
+	for(int i=0; i < Sum->row; i++){
+		for(int j=0; j < Sum->col; j++){
+			data[i][j] = A->data[i][j] + B->data[i][j];
+		}
+	}
+	Sum->data = data;
+	return Sum;
 }
 
 Matrix* init_matrix(File_mat *mat_file){

@@ -1,11 +1,47 @@
-CC=gcc
-DEBUG=-g
+# -----------------------------------#
+#              Makefile              #
+#         Author: Sang Nguyen        #
+#         Created:  Dec 2019         #
+# -----------------------------------#
 
-defaut: matrix.o linear_regression.o
-	$(CC) $(DEBUG) -o linear_regression matrix.o linear_regression.o
+# Executable name
+TARGET   = linear_regression
 
-%.o: %.c matrix.h
-	$(CC) $< -c
+CC       = gcc
+# compiling flags
+CFLAGS   = -std=c99 -Wall -I.
 
+LINKER   = gcc
+# linking flags
+LFLAGS   = -Wall -I$(INCDIR) -lm
+
+# change these to proper directories where each file should be
+SRCDIR   = ./src
+INCDIR   = ./inc
+OBJDIR   = ./obj
+BINDIR   = ./bin
+
+SOURCES  := $(wildcard $(SRCDIR)/*.c)
+INCLUDES := $(wildcard $(INCDIR)/*.h)
+OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+rm       = rm -f
+
+
+$(BINDIR)/$(TARGET): $(OBJECTS)
+	@mkdir -p bin/
+	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@
+	@echo "Linking complete!"
+
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@mkdir -p obj/
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+.PHONY: clean
 clean:
-	rm -f *.o linear_regression
+	@$(rm) $(OBJECTS)
+	@echo "Cleanup complete!"
+
+.PHONY: remove
+remove: clean
+	@$(rm) $(BINDIR)/$(TARGET)
+	@echo "Executable removed!"

@@ -1,8 +1,8 @@
-#include "matrix.h"
+#include "../inc/matrix.h"
 
 int main(int argc, char const *argv[])
 {
-	File_mat *data_info = get_file("data.mat");
+	File_mat *data_info = get_file("./mat_files/data.mat");
 
 	Matrix *total_input = init_matrix(data_info);
 	Matrix *expect_input = sub_matrix(total_input,1,data_info->row,4,6);
@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
 	printf("w = inv(A).b =\n");
 	display_matrix(w);
 
-	File_mat *f = get_file("input.mat");
+	File_mat *f = get_file("./mat_files/input.mat");
 	Matrix *i = init_matrix(f);
 	Matrix *input = transpose_matrix(i);
 	free_mat(i);
