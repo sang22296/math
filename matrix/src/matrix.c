@@ -1,7 +1,7 @@
 #include "../inc/matrix.h"
 
 bool is_square(Matrix *A){
-	return (A->row == A->col != 0)?true:false;
+	return ((A->row == A->col) && (A->col != 0))?true:false;
 }
 
 void free_mat(Matrix *A){
@@ -185,7 +185,6 @@ Matrix *concatenate_mat(Matrix *A, Matrix *B, bool axis){
 }
 
 Matrix *minors_mat(Matrix *A){
-	double det = 0;
 	if(!is_square(A)){
 		printf("The Matrix is not a square matrix!\n");
 		exit(1);
