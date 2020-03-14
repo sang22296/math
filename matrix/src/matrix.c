@@ -1,7 +1,32 @@
+///////////////////////////////////////
+//       Author: Sang Nguyen         //
+//                                   //
+//    email: nqs.dn222@gmail.com     //
+//                                   //
+//       From Dota2vn with love      //
+///////////////////////////////////////
+
+
 #include "../inc/matrix.h"
 
 bool is_square(Matrix *A){
-	return ((A->row == A->col) && (A->col != 0))?true:false;
+	return ((A->row == A->col) && (A->col != 0)) ? true:false;
+}
+
+uint32_t mat_getrow(Matrix *A) {
+	return A->row;
+}
+
+uint32_t mat_getcol(Matrix *A) {
+	return A->col;
+}
+
+uint32_t file_getrow(File_mat *A) {
+	return A->row;
+}
+
+uint32_t file_getcol(File_mat *A) {
+	return A->col;
 }
 
 void free_mat(Matrix *A){
@@ -186,7 +211,7 @@ Matrix *concatenate_mat(Matrix *A, Matrix *B, bool axis){
 
 Matrix *minors_mat(Matrix *A){
 	if(!is_square(A)){
-		printf("The Matrix is not a square matrix!\n");
+		printf("minor matrix: The Matrix is not a square matrix!\n");
 		exit(1);
 	}
 	if(A->row == 2){
@@ -265,7 +290,7 @@ Matrix *sign_chart(uint32_t n){
 double det_mat(Matrix *A){
 	double det = 0;
 	if(!is_square(A)){
-		printf("The Matrix is not a square matrix!\n");
+		printf("det_mat: The Matrix is not a square matrix!\n");
 		exit(1);
 	}
 	if(A->row == 1){
@@ -377,6 +402,11 @@ Matrix *time_matrix(Matrix *A,Matrix *B){
 }
 
 Matrix* mul_matrix(Matrix* A, Matrix* B) {
+	if(A->col != B->row) {
+		printf("The input collum of first matrix must be equal to the row of second matrix\n");
+		printf("A->col = %u\t B->row = %u\n", A->col, B->row);
+		exit(1);
+	}
 	double **data = (double **)calloc(A->row,sizeof(double*));
 	for(int i=0; i<A->row; i++){
 		data[i] = (double *)calloc(B->col,sizeof(double));
@@ -385,7 +415,7 @@ Matrix* mul_matrix(Matrix* A, Matrix* B) {
 	RET->row = A->row;
 	RET->col = B->col;
 	RET->data = data;
-	
+
 	for(int i = 0; i < A->row; i++){
 		for(int m=0; m < B->col; m++){
 			for(int j = 0; j < B->row; j++) {
@@ -397,7 +427,7 @@ Matrix* mul_matrix(Matrix* A, Matrix* B) {
 	return RET;
 }
 
-Matrix *inv_mat(Matrix *A){
+Matrix *inv_matrix(Matrix *A){
 	if(!is_square(A)){
 		printf("The Matrix is not a square matrix!\n");
 		exit(1);
@@ -494,7 +524,16 @@ void display_matrix(Matrix *A) {
 File_mat *get_file(char *file_name){
 	File_mat *mat_file = (File_mat *)calloc(1,sizeof(File_mat));
 	mat_file->file_name = file_name;
-	FILE *file = fopen(mat_file->file_name,"r");
+	// These lines were added for fixing "last enter bug"
+	FILE *file = fopen(mat_file->file_name,"a+r");
+	fseek(file,0,SEEK_END);
+	fseek(file,ftell(file)-1,SEEK_SET);
+	if(fgetc(file) != '\n') {
+		fprintf(file, "\n");
+	}
+	fclose(file);
+	//
+	file = fopen(mat_file->file_name,"r");
 	if(file == NULL){
 		printf("File of matrix name: %s does not exist!\n",file_name);
 		exit(1);
@@ -512,7 +551,7 @@ File_mat *get_file(char *file_name){
 			line++;
 		bool sub_endline = false;
 		if(!isdigit(current) && !isspace(current) && current != '.'){
-			printf("Invalid character in Matrix file!\n");
+			printf("Invalid character in file!\n");
 			printf("In %s, line %d\n", file_name,line);
 			exit(1);
 		}
@@ -541,7 +580,7 @@ File_mat *get_file(char *file_name){
 		}
 		if(sub_endline){
 			if(sub_col != mat_file->col){
-				printf("Invalid matrix file!\n");
+				printf("Invalid file!\n");
 				printf("In %s, line %d\n", file_name,line);
 				exit(1);
 			}
@@ -550,7 +589,7 @@ File_mat *get_file(char *file_name){
 		last = current;
 	}
 	if(mat_file->row == 0 || mat_file->col == 0){
-		printf("Warning!!! There is problem in the matrix file: %s!!!\n",file_name);
+		printf("Warning!!! There is problem in the file: %s!!!\n",file_name);
 	}
 	return mat_file;
 }

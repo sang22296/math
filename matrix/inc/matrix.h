@@ -1,3 +1,12 @@
+///////////////////////////////////////
+//       Author: Sang Nguyen         //
+//                                   //
+//    email: nqs.dn222@gmail.com     //
+//                                   //
+//       From Dota2vn with love      //
+///////////////////////////////////////
+
+
 #ifndef __MATLIB__
 
 #define __MATLIB__
@@ -26,6 +35,11 @@ typedef struct File_mat {
 
 void free_mat(Matrix *A);
 
+uint32_t mat_getrow(Matrix *A);
+uint32_t mat_getcol(Matrix *A);
+uint32_t file_getrow(File_mat *A);
+uint32_t file_getcol(File_mat *A);
+
 // Create a sub matrix from input matrix A, which coressponding number of rows and collum
 Matrix *sub_matrix(Matrix *A, uint32_t r_from, uint32_t r_to, uint32_t c_from, uint32_t c_to);
 
@@ -45,7 +59,7 @@ Matrix *concatenate_mat(Matrix *A, Matrix *B, bool axis);
 //	"axis" decide if the new 1D matrix is horizontal or vertical (true or false)
 Matrix *ones(uint32_t num, bool axis);
 
-//The same as ones(), but only the element at pos equal 2, others equal 0
+//The same as ones(), but only the element at pos equal 1, others equal 0
 Matrix *one_hot(uint32_t num, uint32_t pos);
 
 //Check if a matrix is a square matrix
@@ -87,7 +101,7 @@ Matrix *time_matrix(Matrix *A,Matrix *B);
 Matrix* mul_matrix(Matrix* A, Matrix* B);
 
 //Return the matrix which is invert of the given matrix
-Matrix *inv_mat(Matrix *A);
+Matrix *inv_matrix(Matrix *A);
 
 //Initalize a matrix based on infomation read in a file as type File_mat
 Matrix* init_matrix(File_mat *mat_file);

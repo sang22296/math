@@ -5,43 +5,53 @@
 # -----------------------------------#
 
 # Executable name
-TARGET   = linear_regression
+TARGET    = main
 
-CC       = gcc
+CC        = gcc
 # compiling flags
-CFLAGS   = -std=c99 -Wall -I.
+CFLAGS    = -std=c99 -Wall -I.
+SO_FLAGS  = -shared -fPIC
 
-LINKER   = gcc
+SO_TARGET = linear_rg.so
+SO_SRC    = ./src/linear_regression.c
+
+LINKER    = gcc
 # linking flags
-LFLAGS   = -Wall -I -lm
+LFLAGS    = -Wall -I -lm
 
 # change these to proper directories where each file should be
-SRCDIR   = ./src
-INCDIR   = ./inc
-OBJDIR   = ./obj
-BINDIR   = ./bin
+SRCDIR    = ./src
+INCDIR    = ./inc
+OBJDIR    = ./obj
+BINDIR    = ./bin
+SO_DIR    = ./share_obj
 
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(INCDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-rm       = rm -f
+rm        = rm -f
 
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@mkdir -p bin/
+	@mkdir -p $(BINDIR)
 	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@
 	@echo "Linking complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@mkdir -p obj/
+	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+so:
+	@mkdir -p $(SO_DIR)
+	@$(CC) $(SO_SRC) $(CFLAGS) $(SO_FLAGS) -o $(SO_DIR)/$(SO_TARGET)
+	@echo "Create shared object for linear_regression.c in $(SO_DIR)/$(SO_TARGET)"
 
 .PHONY: clean
 clean:
-	@$(rm) $(OBJECTS)
+	@$(rm) -rf $(OBJDIR)
 	@echo "Cleanup complete!"
 
 .PHONY: remove
 remove: clean
-	@$(rm) $(BINDIR)/$(TARGET)
+	@$(rm) -rf $(BINDIR)
 	@echo "Executable removed!"
