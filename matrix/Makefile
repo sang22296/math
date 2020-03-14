@@ -41,14 +41,14 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-so:
+so: $(OBJECTS)
 	@mkdir -p $(SO_DIR)
-	@$(CC) $(SO_SRC) $(CFLAGS) $(SO_FLAGS) -o $(SO_DIR)/$(SO_TARGET)
+	@$(CC) $(SOURCES) $(CFLAGS) $(SO_FLAGS) -o $(SO_DIR)/$(SO_TARGET)
 	@echo "Create shared object for linear_regression.c in $(SO_DIR)/$(SO_TARGET)"
 
 .PHONY: clean
 clean:
-	@$(rm) -rf $(OBJDIR)
+	@$(rm) -rf $(OBJDIR) $(SO_DIR)
 	@echo "Cleanup complete!"
 
 .PHONY: remove
