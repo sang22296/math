@@ -40,6 +40,9 @@ uint32_t mat_getcol(Matrix *A);
 uint32_t file_getrow(File_mat *A);
 uint32_t file_getcol(File_mat *A);
 
+// Constructor for initiating a Matrix
+Matrix *construct_matrix(uint32_t r, uint32_t c);
+
 // Create a sub matrix from input matrix A, which coressponding number of rows and collum
 Matrix *sub_matrix(Matrix *A, uint32_t r_from, uint32_t r_to, uint32_t c_from, uint32_t c_to);
 

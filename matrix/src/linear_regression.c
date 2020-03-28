@@ -82,7 +82,7 @@ Vector *apply_linear_rg(Vector *weight, char *file) {
 	Matrix *one    = ones(mat_getrow(input),VER);
 	Matrix *Xbar   = concatenate_mat(one,input,HOR);
 	Vector *output = mul_matrix(Xbar,weight);
-	display_vector(output);
+	// display_vector(output);
 	return output;
 
 }

@@ -8,13 +8,24 @@
 
 
 #include "../inc/linear_regression.h"
+#include "../inc/kmean_clustering.h"
 
 int main(int argc, char const *argv[])
 {
+#if 0
+	char data[]                  = "./mat_files/data.mat";
+	File_mat *data_info  = get_file(data);
+	Matrix *data_matrix         = init_matrix(data_info);
+	display_vector(get_line(data_matrix,1,VER));
+#endif
 	char sample_input_file[]  = "./mat_files/sample_input.mat";
 	char sample_output_file[] = "./mat_files/sample_output.mat";
 	char input_file[]         = "./mat_files/input.mat";
+
+
 	Vector *weight = linear_regression(sample_input_file,sample_output_file);
-	apply_linear_rg(weight, input_file);
+	Vector *output = apply_linear_rg(weight, input_file);
+	display_vector(output);
+	Kmean_clustering(sample_input_file,3);
 	return 0;
 }

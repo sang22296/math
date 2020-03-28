@@ -40,6 +40,20 @@ void free_mat(Matrix *A){
 	free(A);
 }
 
+Matrix *construct_matrix(uint32_t r, uint32_t c) {
+
+	double **data = (double **)calloc(r,sizeof(double *));
+	for(int i=0; i<r; i++) {
+		data[i] = (double *)calloc(c,sizeof(double));
+	}
+
+	Matrix *M       = (Matrix *)calloc(1,sizeof(Matrix));
+	M->row = r;
+	M->col = c;
+	M->data = data;
+	return M;
+}
+
 Matrix *sub_matrix(Matrix *A, uint32_t r_from, uint32_t r_to, uint32_t c_from, uint32_t c_to){
 	if(A == NULL){
 		printf("Invalid input matrix!\n");
@@ -515,7 +529,7 @@ void display_matrix(Matrix *A) {
 
 	for(int i = 0; i < A->row; i++) {
 		for(int j = 0; j < A->col; j++){
-			printf("%.2lf\t", A->data[i][j]);
+			printf("%.3lf\t", A->data[i][j]);
 		}
 		printf("\n");
 	}
