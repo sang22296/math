@@ -564,7 +564,7 @@ File_mat *get_file(char *file_name){
 		if(current == '\n')
 			line++;
 		bool sub_endline = false;
-		if(!isdigit(current) && !isspace(current) && current != '.'){
+		if(!isdigit(current) && !isspace(current) && current != '.' && current != '-'){
 			printf("Invalid character in file!\n");
 			printf("In %s, line %d\n", file_name,line);
 			exit(1);
@@ -604,6 +604,7 @@ File_mat *get_file(char *file_name){
 	}
 	if(mat_file->row == 0 || mat_file->col == 0){
 		printf("Warning!!! There is problem in the file: %s!!!\n",file_name);
+		exit(1);
 	}
 	return mat_file;
 }
