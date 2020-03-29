@@ -11,14 +11,14 @@
 
 void init_centers(Matrix *centers) {
 /*TO DO*/
-	centers->data[0][0] = 150;
-	centers->data[0][1] = 0;
+	centers->data[0][0] = 1.95180248;
+	centers->data[0][1] = 6.72897643;
 
-	centers->data[1][0] = 160;
-	centers->data[1][1] = 0.7;
+	centers->data[1][0] = 1.9444814;
+	centers->data[1][1] = 3.06716532;
 
-	centers->data[2][0] = 170;
-	centers->data[2][1] = 0.5;
+	centers->data[2][0] = 3.42144011;
+	centers->data[2][1] = 0.17309469;
 }
 
 bool has_converged(Matrix *new_centers, Matrix *last_centers) {
@@ -113,7 +113,7 @@ Matrix *Kmean_clustering(char *data_file, uint32_t n_clusters) {
 		// update label
 		printf("Update labels\n");
 		labels = update_label(data,centers);
-		display_vector(labels);
+		// display_vector(labels);
 		// update center
 		// free_mat(last_centers);
 		printf("Last centers\n");
