@@ -105,24 +105,25 @@ Matrix *Kmean_clustering(char *data_file, uint32_t n_clusters) {
 	Matrix *labels       = construct_matrix(data->row, n_clusters);
 
 	// init center
-	printf("Init centers\n");
+	// printf("Init centers\n");
 	init_centers(centers);
-	display_vector(centers);
+	// display_vector(centers);
 
 	do {
 		// update label
-		printf("Update labels\n");
+		// printf("Update labels\n");
+		free_mat(labels);
 		labels = update_label(data,centers);
 		// display_vector(labels);
 		// update center
-		// free_mat(last_centers);
-		printf("Last centers\n");
+		free_mat(last_centers);
 		last_centers = centers;
-		display_matrix(last_centers);
-		printf("Update centers\n");
+		// printf("Update centers\n");
 		centers = update_center(data,labels);
-		display_matrix(centers);
 		// has converged ? return:continue
 	} while(!has_converged(last_centers,centers));
-	return labels;
+	printf("Centers: \n");
+	display_matrix(centers);
+
+	return centers;
 }

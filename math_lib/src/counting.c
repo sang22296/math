@@ -36,10 +36,11 @@ uint64_t comb(uint32_t n, uint32_t k) {
 }
 
 
-
+#if 0
 int main() {
 	printf("%lu\n", fact(3));
 	printf("%lu\n", perm(20,3));
 	printf("%lu\n", comb(20,3));
 	return 0;
 }
+#endif

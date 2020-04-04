@@ -6,12 +6,23 @@
 //       From Dota2vn with love      //
 ///////////////////////////////////////
 
-#ifndef KMEAN
-#define KMEAN
 
-#include "matrix.h"
-#include "vector.h"
+#ifndef COMMON
+#define COMMON
 
-Matrix *Kmean_clustering(char *sample_input_file, uint32_t n_clusters);
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <ctype.h>
+
+typedef struct File_mat {
+	uint32_t row;
+	uint32_t col;
+	char *file_name;
+} File_mat;
+
+typedef File_mat File_vec;
 
 #endif

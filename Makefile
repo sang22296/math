@@ -12,7 +12,7 @@ CC        = gcc
 CFLAGS    = -std=c99 -Wall -I.
 SO_FLAGS  = -shared -fPIC
 
-SO_TARGET = linear_rg.so
+SO_TARGET = ML_algo.so
 SO_SRC    = ./src/linear_regression.c
 
 LINKER    = gcc
@@ -20,38 +20,30 @@ LINKER    = gcc
 LFLAGS    = -Wall -I -lm
 
 # change these to proper directories where each file should be
-SRCDIR    = ./src
-INCDIR    = ./inc
+SRCDIR    = $(shell find -name "src")
+INCDIR    = $(shell find -name "inc")
 OBJDIR    = ./obj
 BINDIR    = ./bin
 SO_DIR    = ./share_obj
 
-SOURCES  := $(wildcard $(SRCDIR)/*.c)
-INCLUDES := $(wildcard $(INCDIR)/*.h)
-OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+SOURCES  := $(shell find $(SRCDIR) -name '*.c')
+INCLUDES := $(shell find $(INCDIR) -name '*.h')
+OBJECTS  := $(SOURCES: %.c=%.o)
 rm        = rm -f
 
 
-$(BINDIR)/$(TARGET): $(OBJECTS)
+$(BINDIR)/$(TARGET): $(SOURCES)
 	@mkdir -p $(BINDIR)
-	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@
+	@$(LINKER) $(SOURCES) $(LFLAGS) -o $@
 	@echo "Linking complete!"
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-so: $(OBJECTS)
+share_obj: $(SOURCES)
 	@mkdir -p $(SO_DIR)
 	@$(CC) $(SOURCES) $(CFLAGS) $(SO_FLAGS) -o $(SO_DIR)/$(SO_TARGET)
-	@echo "Create shared object for linear_regression.c in $(SO_DIR)/$(SO_TARGET)"
+	@echo "Create shared object for ML algo in $(SO_DIR)/$(SO_TARGET)"
 
 .PHONY: clean
 clean:
-	@$(rm) -rf $(OBJDIR) $(SO_DIR)
+	@$(rm) -rf $(OBJDIR) 
+	@$(rm) -rf $(BINDIR) $(SO_DIR)
 	@echo "Cleanup complete!"
-
-.PHONY: remove
-remove: clean
-	@$(rm) -rf $(BINDIR)
-	@echo "Executable removed!"

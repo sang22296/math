@@ -11,12 +11,7 @@
 
 #define __MATLIB__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <ctype.h>
+#include "../../common/inc/common.h"
 
 #define HOR true
 #define VER false
@@ -26,12 +21,6 @@ typedef struct Matrix {
 	uint32_t col;
 	double **data;
 } Matrix;
-
-typedef struct File_mat {
-	uint32_t row;
-	uint32_t col;
-	char *file_name;
-} File_mat;
 
 void free_mat(Matrix *A);
 
@@ -114,8 +103,5 @@ void write_matrix(Matrix *A,char *file_name);
 
 //Print a matrix
 void display_matrix(Matrix *A);
-
-//Read a file and return the information of that file as type File_mat
-File_mat *get_file(char *file_name);
 
 #endif

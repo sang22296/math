@@ -15,7 +15,6 @@
 
 /* Vecotr basically is a matrix with 1 row or 1 collum*/
 typedef Matrix Vector;
-typedef File_mat File_vec;
 
 typedef enum {
 	COL = 0,

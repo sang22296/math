@@ -47,7 +47,7 @@ def has_converged(centers, new_centers):
 
 def kmeans(X, K):
     centers = [kmeans_init_centers(X, K)]
-    print(centers)
+    # print(centers)
     labels = []
     it = 0 
     while True:
