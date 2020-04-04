@@ -24,9 +24,10 @@
 	Main program
 
 # Makefile
-##make
+
+## make
 	build the program in src/, the executable file is created at bin/
-##make clean
+## make clean
 	clean all the build output
-##make share_obj
+## make share_obj
 	create share object for binding to another language
