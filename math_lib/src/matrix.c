@@ -524,6 +524,39 @@ void write_matrix(Matrix *A,char *file_name){
 	fclose(file);
 }
 
+Matrix *image_to_matrix(img_info *i_info) {
+	uint32_t h = i_info->height;
+	uint32_t w = i_info->width;
+	uint32_t n = i_info->bpp;
+	Matrix *A = construct_matrix(h*w, n);
+	unsigned char *data = i_info->img_data;
+
+	for(int i=0; i < h; i++){
+		for(int j=0; j < w; j++){
+			for(int k=0; k < n; k++) {
+				A->data[i*w + j][k] = data[i*w*n + j*n + k];
+			}
+		}
+	}
+	return A;
+}
+
+unsigned char *matrix_to_image(Matrix *A, uint32_t h, uint32_t w) {
+
+	uint32_t n = A->col;
+	printf("w: %d h: %d\n", w, h);
+	unsigned char *data = calloc(h*w*n,sizeof(unsigned char));
+
+	for(int i=0; i < h; i++){
+		for(int j=0; j < w; j++){
+			for(int k=0; k < n; k++) {
+				data[i*w*n + j*n + k] = (unsigned char)A->data[i*w + j][k];
+			}
+		}
+	}
+	return data;
+}
+
 void display_matrix(Matrix *A) {
 	printf("(%d;%d)\n", A->row, A->col);
 

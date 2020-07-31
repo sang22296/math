@@ -83,3 +83,22 @@ File_mat *get_file(char *file_name){
 	}
 	return mat_file;
 }
+
+void image_to_raw_data(img_info *i_info, const char *file_name) {
+	uint32_t h = i_info->height;
+	uint32_t w = i_info->width;
+	uint32_t n = i_info->bpp;
+	unsigned char *data = i_info->img_data;
+
+	FILE *file = fopen(file_name,"w");
+	for(int i=0; i < h; i++){
+		for(int j=0; j < w; j++){
+			for(int k=0; k < n; k++) {
+				fprintf(file, "%d", data[i*w*n + j*n + k]);
+				fprintf(file, " ");
+			}
+			fprintf(file, "\n");
+		}
+	}
+	fclose(file);
+}

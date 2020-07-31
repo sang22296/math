@@ -101,6 +101,11 @@ Matrix* init_matrix(File_mat *mat_file);
 //Write a given matrix into a file as given file name
 void write_matrix(Matrix *A,char *file_name);
 
+// Return a matrix contain data of an image
+Matrix *image_to_matrix(img_info *i_info);
+
+unsigned char *matrix_to_image(Matrix *A, uint32_t w, uint32_t h);
+
 //Print a matrix
 void display_matrix(Matrix *A);
 

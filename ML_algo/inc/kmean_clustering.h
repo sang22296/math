@@ -15,4 +15,6 @@
 
 Matrix *Kmean_clustering(char *sample_input_file, uint32_t n_clusters);
 
+Matrix *Kmean_clustering_img(img_info *i_info, uint32_t n_clusters);
+
 #endif

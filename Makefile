@@ -9,15 +9,16 @@ TARGET    = main
 
 CC        = gcc
 # compiling flags
-CFLAGS    = -std=c99 -Wall -I.
+CFLAGS    = -std=c99 -Wall -I. -lm
 SO_FLAGS  = -shared -fPIC
 
 SO_TARGET = ML_algo.so
 SO_SRC    = ./src/linear_regression.c
 
-LINKER    = gcc
+COMPILER    = gcc
 # linking flags
-LFLAGS    = -Wall -I -lm
+# LFLAGS    = -Wall -I. -lm
+LFLAGS    = -I. -lm
 
 # change these to proper directories where each file should be
 SRCDIR    = $(shell find -name "src")
@@ -34,8 +35,8 @@ rm        = rm -f
 
 $(BINDIR)/$(TARGET): $(SOURCES)
 	@mkdir -p $(BINDIR)
-	@$(LINKER) $(SOURCES) $(LFLAGS) -o $@
-	@echo "Linking complete!"
+	@$(COMPILER) $(SOURCES) $(LFLAGS) -o $@
+	@echo "Build complete!"
 
 share_obj: $(SOURCES)
 	@mkdir -p $(SO_DIR)

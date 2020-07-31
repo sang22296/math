@@ -17,7 +17,7 @@ Vector *linear_regression(char *sample_input_file, char *sample_output_file)
 	Matrix *input         = init_matrix(input_info);
 	Vector *output        = init_vector(output_info);
 	if(input->row != vector_length(output)) {
-		printf("The input data and out put data does not match\n");
+		printf("The input data and output data does not match\n");
 		printf("Input file %s has %u rows\n",sample_input_file,input->row);
 		printf("but output file %s has data length = %u\n", sample_output_file,vector_length(output));
 		free_mat(input);

@@ -127,3 +127,41 @@ Matrix *Kmean_clustering(char *data_file, uint32_t n_clusters) {
 
 	return centers;
 }
+
+Matrix *Kmean_clustering_img(img_info *i_info, uint32_t n_clusters) {
+
+	Matrix *data         = image_to_matrix(i_info);
+	Matrix *centers      = construct_matrix(n_clusters,data->col);
+	Matrix *last_centers = construct_matrix(n_clusters,data->col);
+	Matrix *labels       = construct_matrix(data->row, n_clusters);
+
+	// Init centers for image
+	double thresh_hold = 255/(centers->row);
+	for(int i=0; i < centers->row; i++) {
+		for(int j=0; j < centers->col; j++) {
+			centers->data[i][j] = thresh_hold*i;
+		}
+	}
+
+	do {
+		// update label
+		// printf("Update labels\n");
+		free_mat(labels);
+		labels = update_label(data,centers);
+		// display_vector(labels);
+		// update center
+		free_mat(last_centers);
+		last_centers = centers;
+		// printf("Update centers\n");
+		centers = update_center(data,labels);
+		// has converged ? return:continue
+	} while(!has_converged(last_centers,centers));
+	printf("Centers: \n");
+	display_matrix(centers);
+
+	Matrix *res = mul_matrix(labels, centers);
+	// display_matrix(res);
+	// free_mat(labels);
+	// free_mat(centers);
+	return res;
+}

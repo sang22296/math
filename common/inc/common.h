@@ -25,4 +25,11 @@ typedef struct File_mat {
 
 typedef File_mat File_vec;
 
+typedef struct image_info {
+	uint32_t height;
+	uint32_t width;
+	uint32_t bpp; // bytes per pixel
+	unsigned char *img_data;
+} img_info;
+
 #endif
